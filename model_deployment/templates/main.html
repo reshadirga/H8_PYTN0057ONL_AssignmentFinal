@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/mainstyle.css">
+    <title>H8 Model Deployment</title>
+</head>
+<body>
+    <div class="form glass">
+        <h1>How are you doing if you are on Titanic?</h1>
+        <form name="mainform" action="{{url_for('predict')}}" method="post" >
+            <h5>Ticket Class</h5>
+            <select name="pclass" required="required" placeholder="Ticket Class">
+                <option hidden class="placeholderclass" value=""> -- select an option -- </option>
+                <option value="1">1st Class</option>
+                <option value="2">2nd Class</option>
+                <option value="3">3rd Class</option>
+            </select>
+            <br/>
+            <h5>Sex</h5>
+            <select name="sex" required="required">
+                <option hidden class="placeholderclass" value=""> -- select an option -- </option>
+                <option value="1">Male</option>
+                <option value="0">Female</option>
+            </select>
+            <br/>
+            <h5>Age (in years)</h5>
+            <input type="number" name="age" placeholder="Insert your age" required="required"/>
+            <br/>
+            <h5>Number of siblings / spouses aboard the Titanic</h5>
+            <input type="number" name="sibsp" placeholder="Insert the number of your siblings / spouses aboard the Titanic" required="required"/>
+            <br/>
+            <h5>Number of parents / children aboard the Titanic</h5>
+            <input type="number" name="parch" placeholder="Insert the number of your parents / childern aboard the Titanic" required="required"/>
+            <br/>
+            <h5>Passenger fare</h5>
+            <input id="inputFare" type="number" name="fare" placeholder="Insert the ticket fare (in USD)" required="required"/>
+            <br/>
+            <h5>Cabin booking (yes/no)</h5>
+            <select name="cabin" required="required">
+                <option hidden class="placeholderclass" value=""> -- select an option -- </option>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+            <br/>
+            <h5>Port of Embarkation</h5>
+            <select name="embarked" required>
+                <option hidden class="placeholderclass" value=""> -- select an option -- </option>
+                <option value="0">Cherbourg</option>
+                <option value="1">Queenstown</option>
+                <option value="2">Southampton</option>
+            </select>
+            <br/>
+            <button type="submit" class="btn btn-primary btn-block btn-large" onsubmit="execsubmit">Predict</button>
+        </form>
+        <p class="message">{{ prediction_text }}</p>
+        <a href="/">Predict another passenger</a>
+    </div>
+
+    <script>
+        // Scale fare manually using standard scaler formula
+        function execsubmit(){
+            document.mainform.fare.value = (document.mainform.fare.value - 32.2042079685746) / 49.693428597180905
+            return true;
+        }
+    </script>
+</body>
+</html>
